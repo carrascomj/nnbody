@@ -1,4 +1,8 @@
-"""Mutate sequences given the mutation sites."""
+"""Mutate sequences given the mutation sites.
+
+author: Jorge Carrasco Muriel
+contact: carrascomurielj@gmail.com
+"""
 from os.path import join, pardir
 from typing import Dict
 
