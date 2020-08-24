@@ -116,3 +116,4 @@ dmypy.json
 
 # Internal data
 data/
+scp.txt
