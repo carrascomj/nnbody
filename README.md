@@ -4,7 +4,7 @@
 * [x] Generate homology models.
 * [ ] Extract features.
   * [x] MOE: name chains
-  * [ ] BIOIL: convert to PDB
+  * [x] BIOIL: convert to PDB
   * [ ] 3D feature workflow
   * [ ] Just select loops
 * [ ] Model Feed forward NNet.
@@ -16,8 +16,7 @@
 ## Guided tour
     ├── README.md          <- The top-level README for developers using this project.
     ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
+    │   ├── interm        <- Intermediate data that has been transformed.
     │   ├── processed      <- The final, canonical data sets for modeling.
     │   └── raw            <- The original, immutable data dump.
     │
@@ -33,8 +32,9 @@
     ├── src                <- Source code for use in this project.
     │   ├── __init__.py    <- Makes src a Python module
     │   │
-    │   ├── process        <- Scripts to download or generate data
-    │   │   └── mutate.py  <- Generate FASTA files for the mutated sequences
+    │   ├── process            <- Scripts to download or generate data
+    │   │   └── mutate.py      <- Generate FASTA files for the mutated sequences
+    │   │   └── put_chains.py  <- Annotate missing chains of a MOE generated PDB.
     │   │
     │   ├── features       <- Scripts to turn raw data into features for modeling
     │   │   └── build_features.py
