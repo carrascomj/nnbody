@@ -1,8 +1,12 @@
 # Roadmap
 
 * [x] Generate mutated sequences.
-* [ ] Generate homology models.
+* [x] Generate homology models.
 * [ ] Extract features.
+  * [x] MOE: name chains
+  * [ ] BIOIL: convert to PDB
+  * [ ] 3D feature workflow
+  * [ ] Just select loops
 * [ ] Model Feed forward NNet.
 * [ ] Train/test/validate
 * [ ] Find Convolution.
