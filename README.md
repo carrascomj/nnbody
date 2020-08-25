@@ -5,6 +5,7 @@
 * [ ] Extract features.
   * [x] MOE: name chains
   * [x] BIOIL: convert to PDB
+  * [x] Prepare data.csv (id, pdb_chain, regression value)
   * [ ] 3D feature workflow
   * [ ] Just select loops
 * [ ] Model Feed forward NNet.
@@ -33,11 +34,12 @@
     │   ├── __init__.py    <- Makes src a Python module
     │   │
     │   ├── process            <- Scripts to download or generate data
-    │   │   └── mutate.py      <- Generate FASTA files for the mutated sequences
+    │   │   ├── mutate.py      <- Generate FASTA files for the mutated sequences
     │   │   └── put_chains.py  <- Annotate missing chains of a MOE generated PDB.
     │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
+    │   ├── features              <- Scripts to turn raw data into features for modeling
+    │   │   ├── generate.py       <- Script to convert PDBs to features
+    │   │   └── protein_graph.py  <- out-of-memory dataloader/data augmentation
     │   │
     │   ├── models         <- Scripts to train models and then use trained models to make
     │   │   │                 predictions
