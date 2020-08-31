@@ -40,7 +40,7 @@ def annotate_all(paths: List, out_dir: str = "."):
         annotate_chains(path, join(out_dir, f"{tail[:tail.find('_L')]}.pdb"))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     data = join(pardir, pardir, "data", "interm", "moe_out")
     out_dir = join(data, pardir, "moe_chained")
     pdbs = [
