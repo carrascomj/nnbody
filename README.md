@@ -6,13 +6,32 @@
   * [x] MOE: name chains
   * [x] BIOIL: convert to PDB
   * [x] Prepare data.csv (id, pdb_chain, regression value)
-  * [ ] 3D feature workflow
+  * [x] 3D feature workflow
   * [ ] Just select loops
 * [ ] Model Feed forward NNet.
 * [ ] Train/test/validate
 * [ ] Find Convolution.
 * [ ] Model GCNN.
 * [ ] Train/test/validate.
+
+There are two proteins that were introduced in the sequence dataset (AF96737, AF96738).
+ - AF96737 HC (A33T, N54Q) LC(G50W)
+ - AF96738 GM037v2_VL_G50W,S94T; VH_A33T
+
+The `generate.py` script was modified to account for non-TER-minated chains.
+
+# Selected loops
+The Deep Learning models use only loop structures and neighbors of them.
+
+### Light chain
+- 26-32
+- 49-57
+- 91-96
+
+### Heavy chain
+- 26-34
+- 50-66
+- 93-102
 
 ## Guided tour
     ├── README.md          <- The top-level README for developers using this project.

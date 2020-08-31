@@ -70,6 +70,7 @@ def parse_pdb(path, chain, all_chains=False, first=False):
     res_ = None
     res_i = None
     res_c = None
+    curr_chain = "0"
     sidechain_data = []
     sidechain_flag = False
     sidechain_counter = 0
@@ -102,6 +103,7 @@ def parse_pdb(path, chain, all_chains=False, first=False):
                 # Check if for chain
                 if not all_chains and row[21] != chain.upper():
                     continue
+                curr_chain = row[21]
 
                 if res_i is None:
                     # residue number in the sequence
@@ -155,7 +157,8 @@ def parse_pdb(path, chain, all_chains=False, first=False):
                         protein_data.append(res_data)
                     res_i = row[22:26]
 
-            if row[:3] == "TER":
+            if row[:3] == "TER" or row[:6] == "CONECT":
+                # last chain may lack TER line
                 if sidechain_flag:
                     try:
                         ress = residues.index(res_)
@@ -176,7 +179,7 @@ def parse_pdb(path, chain, all_chains=False, first=False):
                         protein_data.append(res_data)
 
                 if len(protein_data) > 0:
-                    complex_data[row[21].upper()] = protein_data
+                    complex_data[curr_chain.upper()] = protein_data
                     protein_data = []
                     if not all_chains or first:
                         break
@@ -370,7 +373,7 @@ def main(datafolder, verbose):
                 print("PDB not found: " + pdb_id + ".pdb")
             continue
         protein_data = parse_pdb(
-            data_folder + "pdb/" + pdb_id + ".pdb", chain_id, all_chains, first
+            data_folder + "pdb/" + pdb_id + ".pdb", chain_id, all_chains, False
         )
         if len(protein_data) == 0:
             fails += 1
