@@ -68,6 +68,7 @@ class ProteinGraphDataset(Dataset):
             self.data = np.concatenate([self.data, augment_flags], axis=-1)
 
         self.ident = np.eye(nb_nodes)
+        self.heap = []
 
     def __getitem__(self, index):
         """Return index operator.
@@ -87,6 +88,9 @@ class ProteinGraphDataset(Dataset):
                 one-hot encoding of label ("classification") or [label]
 
         """
+        if self.heap:
+            # if preprocessed and stored in memory, just return it
+            return self.heap[index]
         # Parse Protein Graph
         data_ = []
         with open(self.data[index][0], "r") as f:
@@ -204,6 +208,14 @@ class ProteinGraphDataset(Dataset):
         sequence_enc[1:, 1::2] = np.cos(sequence_enc[1:, 1::2])  # dim 2i+1
 
         return sequence_enc
+
+    def flush(self):
+        """Compute all feature matrices and store them in memory.
+
+        Avoid the overhead of doing it for every epoch if df is small.
+        """
+        for data_point in self:
+            self.heap.append(data_point)
 
 
 def get_longest(path):
