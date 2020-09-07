@@ -7,8 +7,9 @@
   * [x] BIOIL: convert to PDB
   * [x] Prepare data.csv (id, pdb_chain, regression value)
   * [x] 3D feature workflow
-  * [ ] Just select loops
+  * [x] Just select loops
 * [ ] Model Feed forward NNet.
+  * [ ] Script to train it on server.
 * [ ] Train/test/validate
 * [ ] Find Convolution.
 * [ ] Model GCNN.
