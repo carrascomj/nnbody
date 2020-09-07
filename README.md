@@ -8,9 +8,9 @@
   * [x] Prepare data.csv (id, pdb_chain, regression value)
   * [x] 3D feature workflow
   * [x] Just select loops
-* [ ] Model Feed forward NNet.
+* [x] Model Feed forward NNet.
   * [ ] Script to train it on server.
-* [ ] Train/test/validate
+* [x] Train/test/validate
 * [ ] Find Convolution.
 * [ ] Model GCNN.
 * [ ] Train/test/validate.
