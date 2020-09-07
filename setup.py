@@ -9,7 +9,6 @@ def readme():
 
 setup(
     name="nnbody",
-    package_dir="src",
     version="0.1.0",
     description="NNETS lundbeck antibodies",
     author="Jorge Carrasco Muriel",
