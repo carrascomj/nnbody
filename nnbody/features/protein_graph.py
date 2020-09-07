@@ -214,8 +214,7 @@ class ProteinGraphDataset(Dataset):
 
         Avoid the overhead of doing it for every epoch if df is small.
         """
-        for data_point in self:
-            self.heap.append(data_point)
+        self.heap = [self[i] for i in range(len(self))]
 
 
 def get_longest(path):

@@ -14,7 +14,8 @@ import os
 import click
 import numpy as np
 import pandas as pd
-from mpi4py import MPI
+
+# from mpi4py import MPI
 from scipy.spatial.distance import cosine, euclidean
 from scipy.stats import percentileofscore as perc
 
@@ -323,31 +324,31 @@ def main(datafolder, verbose):
         all_chains = True
 
     # MPI init
-    comm = MPI.COMM_WORLD
-    rank = comm.Get_rank()
-    cores = comm.Get_size()
+    # comm = MPI.COMM_WORLD
+    # rank = comm.Get_rank()
+    # cores = comm.Get_size()
 
     # MPI task distribution
-    if rank == 0:
-        tasks = []
-        with open(data_folder + "data.csv", "r") as f:
-            for i, _ in enumerate(f):
-                row = _[:-1].split(",")
-                tasks.append([row[0], row[1]])
+    # if rank == 0:
+    tasks = []
+    with open(data_folder + "data.csv", "r") as f:
+        for i, _ in enumerate(f):
+            row = _[:-1].split(",")
+            tasks.append([row[0], row[1]])
 
-        if not os.path.exists(data_folder + "graph"):
-            os.mkdir(data_folder + "graph")
+    if not os.path.exists(data_folder + "graph"):
+        os.mkdir(data_folder + "graph")
 
-        # Shuffle for Random Distribution
-        np.random.seed(seed)
-        np.random.shuffle(tasks)
+    # Shuffle for Random Distribution
+    np.random.seed(seed)
+    np.random.shuffle(tasks)
 
-    else:
-        tasks = None
+    # else:
+    #     tasks = None
 
     # Broadcast tasks to all nodes and select tasks according to rank
-    tasks = comm.bcast(tasks, root=0)
-    tasks = np.array_split(tasks, cores)[rank]
+    # tasks = comm.bcast(tasks, root=0)
+    # tasks = np.array_split(tasks, cores)[rank]
 
     # Fetch PDBs
     prime_lens = []
@@ -397,19 +398,19 @@ def main(datafolder, verbose):
     stats = np.concatenate([prime_lens, diameters], axis=-1)
 
     # Gather stats
-    stats_ = comm.gather(stats, root=0)
-    fails_ = comm.gather(fails, root=0)
+    # stats_ = comm.gather(stats, root=0)
+    # fails_ = comm.gather(fails, root=0)
 
-    if rank == 0:
-        if verbose:
-            print("NUMBER OF FAILED GENERATIONS: ", sum(fails_))
-        stats = np.concatenate(stats_, axis=0)
-        df = pd.DataFrame(stats)
-        df.columns = ["nb_residues", "diameters"]
-        summary = df.describe(percentiles=[0.1 * i for i in range(10)])
-        summary.to_csv(
-            data_folder + "/graph.summary", float_format="%1.6f", sep=","
-        )
+    # if rank == 0:
+    if verbose:
+        print("NUMBER OF FAILED GENERATIONS: ", sum(fails))
+    stats = np.concatenate(stats, axis=0)
+    df = pd.DataFrame(stats)
+    df.columns = ["nb_residues", "diameters"]
+    summary = df.describe(percentiles=[0.1 * i for i in range(10)])
+    summary.to_csv(
+        data_folder + "/graph.summary", float_format="%1.6f", sep=","
+    )
 
 
 if __name__ == "__main__":

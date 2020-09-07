@@ -43,7 +43,8 @@ def transform_input(input_nn, training=True):
     # adj = [euclidean_dist(c[prot]) * m[prot] for prot in range(c.shape[0])]
     v = torch.autograd.Variable(v.float())
     y = torch.stack(y).T
-    y = torch.autograd.Variable(
-        torch.LongTensor([torch.where(label == 1)[0][0] for label in y])
-    )
+    # y = torch.autograd.Variable(
+    #     torch.LongTensor([torch.where(label == 1)[0][0] for label in y])
+    # )
+    y = torch.autograd.Variable(y.float())
     return [v, c.float()], y
