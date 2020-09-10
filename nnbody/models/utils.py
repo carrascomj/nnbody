@@ -46,5 +46,12 @@ def transform_input(input_nn, training=True):
     # y = torch.autograd.Variable(
     #     torch.LongTensor([torch.where(label == 1)[0][0] for label in y])
     # )
-    y = torch.autograd.Variable(y.float())
-    return [v, c.float()], y
+    return [v, c.float()], y.float()
+
+
+def range_activation(x, target_min=60, target_max=80):
+    """Map to the defined range."""
+    # x in range(0, 2)
+    x02 = torch.tanh(x) + 1
+    scale = (target_max - target_min) / 2.0
+    return x02 * scale + target_min

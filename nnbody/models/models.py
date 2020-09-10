@@ -18,6 +18,7 @@ class GCN_simple(nn.Module):
         bias=False,
         act=F.relu,
         cuda=False,
+        out_act=lambda x: x,
     ):
         """Initialize GCN model.
 
@@ -51,6 +52,7 @@ class GCN_simple(nn.Module):
         #     nn.Flatten(), nn.Linear(nb_nodes * hidden[-1], label)
         # )
         self.in_cuda = cuda
+        self.out_act = out_act
 
     def forward(self, input):
         """Pass forward GCN model.
@@ -69,7 +71,7 @@ class GCN_simple(nn.Module):
         x, _ = self.hidden_layers.forward(input)
         x = x.sum(axis=-1)
         x = self.out_layer(x)
-        return x
+        return self.out_act(x)
 
 
 class GCN_normed(nn.Module):
@@ -146,7 +148,14 @@ class FFNN(nn.Module):
     """Plain Feed Forward Neural Network."""
 
     def __init__(
-        self, feats, hidden, label, nb_nodes, dropout, cuda=False,
+        self,
+        feats,
+        hidden,
+        label,
+        nb_nodes,
+        dropout,
+        cuda=False,
+        out_act=lambda x: x,
     ):
         """Initialize FFNN model.
 
@@ -171,7 +180,7 @@ class FFNN(nn.Module):
         hidden = [hidden] if isinstance("hidden", int) else hidden
         gc_layers = [
             nn.Sequential(
-                nn.Linear(in_dim, out_dim), nn.ReLU(), nn.Dropout(dropout)
+                nn.Linear(in_dim, out_dim), nn.ReLU(), nn.Dropout(dropout),
             )
             for in_dim, out_dim in zip([feats] + hidden[:-1], hidden)
         ]
@@ -180,6 +189,7 @@ class FFNN(nn.Module):
             nn.Flatten(), nn.Linear(nb_nodes * hidden[-1], label)
         )
         self.in_cuda = cuda
+        self.out_act = out_act
 
     def forward(self, input):
         """Pass forward GCN model.
@@ -196,4 +206,4 @@ class FFNN(nn.Module):
         v, adj = input
         x = self.hidden_layers.forward(v)
         x = self.out_layer(x)
-        return x
+        return self.out_act(x)

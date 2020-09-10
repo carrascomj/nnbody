@@ -23,12 +23,15 @@ def forward_step(batch, model, training):
     cuda: bool
 
     """
+    _, _, m, _ = batch
     inputs, labels_onehot = transform_input(batch, training)
     v, c = inputs
     if model.in_cuda:
         v, c = v.cuda(), c.cuda()
         labels_onehot = labels_onehot.cuda()
-    inputs = v, batched_eucl(c)
+        m = m.cuda()
+    # compute pairwise distance and apply mask
+    inputs = v, batched_eucl(c) * m.float()
     predictions = model(inputs)
 
     return predictions, labels_onehot
