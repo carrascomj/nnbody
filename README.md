@@ -2,7 +2,7 @@
 
 * [x] Generate mutated sequences.
 * [x] Generate homology models.
-* [ ] Extract features.
+* [X] Extract features.
   * [x] MOE: name chains
   * [x] BIOIL: convert to PDB
   * [x] Prepare data.csv (id, pdb_chain, regression value)
@@ -11,9 +11,12 @@
 * [x] Model Feed forward NNet.
   * [ ] Script to train it on server.
 * [x] Train/test/validate
-* [ ] Find Convolution.
-* [ ] Model GCNN.
-* [ ] Train/test/validate.
+  * [x] Use Tm2 instead of Tm1
+* [X] Find Convolution.
+* [x] Model GCNN.
+  * [ ] Use message passing
+* [x] Train/test/validate.
+  * [x] Use Tm2 instead of Tm1
 
 There are two proteins that were introduced in the sequence dataset (AF96737, AF96738).
  - AF96737 HC (A33T, N54Q) LC(G50W)
