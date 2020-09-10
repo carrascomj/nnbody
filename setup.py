@@ -15,6 +15,12 @@ setup(
     author_email="jocc@lundbeck.com",
     keywords="python metabolic-models bioinformatics antibodies",
     packages=find_packages(),
-    install_requires=["pandas", "sklearn", "torch", "torchvision", "matplotlib"],
+    install_requires=[
+        "pandas",
+        "sklearn",
+        "torch",
+        "torchvision",
+        "matplotlib",
+    ],
     zip_safe=False,
 )
